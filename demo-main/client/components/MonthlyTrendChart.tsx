@@ -1,0 +1,63 @@
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
+
+const monthlyData = [
+  { month: "Jan", spending: 28500, income: 42000, savings: 13500 },
+  { month: "Feb", spending: 32100, income: 42000, savings: 9900 },
+  { month: "Mar", spending: 28450, income: 45320, savings: 16870 },
+  { month: "Apr", spending: 31200, income: 43000, savings: 11800 },
+  { month: "May", spending: 26800, income: 44500, savings: 17700 },
+  { month: "Jun", spending: 29500, income: 46000, savings: 16500 },
+];
+
+export function MonthlyTrendChart() {
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-700">
+      <h2 className="text-lg font-bold text-foreground mb-6">Monthly Trends</h2>
+      <ResponsiveContainer width="100%" height={350}>
+        <LineChart data={monthlyData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          <XAxis dataKey="month" stroke="#888" />
+          <YAxis stroke="#888" />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#1e293b",
+              border: "1px solid #475569",
+              borderRadius: "8px",
+            }}
+          />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="income"
+            stroke="#10b981"
+            strokeWidth={2}
+            dot={{ fill: "#10b981", r: 4 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="spending"
+            stroke="#ef4444"
+            strokeWidth={2}
+            dot={{ fill: "#ef4444", r: 4 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="savings"
+            stroke="#3b82f6"
+            strokeWidth={2}
+            dot={{ fill: "#3b82f6", r: 4 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   ArrowRightLeft,
   PieChart,
+  FileText,
   Bell,
   Settings,
   LogOut,
@@ -20,6 +21,7 @@ const navItems: NavItem[] = [
   { name: "Dashboard", path: "/enhanced/dashboard", icon: LayoutDashboard },
   { name: "Transactions", path: "/enhanced/transactions", icon: ArrowRightLeft },
   { name: "Analytics", path: "/enhanced/analytics", icon: PieChart },
+  { name: "Uploads", path: "/enhanced/documents", icon: FileText },
   { name: "Alerts & Insights", path: "/enhanced/alerts", icon: Bell },
   { name: "Settings", path: "/enhanced/settings", icon: Settings },
 ];
@@ -93,7 +95,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
       {/* MOBILE BOTTOM NAV */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white/90 dark:bg-[#0F1115]/90 backdrop-blur-xl border-t border-slate-200/50 dark:border-white/10 flex items-center justify-around py-3 px-2 z-50 pb-safe shadow-2xl text-slate-400">
-        {navItems.slice(0, 5).map((item) => {
+        {navItems.map((item) => {
           const isActive =
             location.pathname === item.path ||
             (item.path !== "/enhanced" &&

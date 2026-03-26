@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Bell, Shield, Wallet, CreditCard, LogOut } from 'lucide-react';
 
 export default function Settings() {
-  const userName = localStorage.getItem('user_name') || 'Deepan S.';
-  const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const [fullName, setFullName] = useState(localStorage.getItem('user_name') || 'Deepan S.');
+  const [username, setUsername] = useState(localStorage.getItem('user_username') || '');
+  const [email, setEmail] = useState(localStorage.getItem('user_email') || 'nexus@example.com');
+  const [phone, setPhone] = useState(localStorage.getItem('user_phone') || '');
+  const [currency, setCurrency] = useState(localStorage.getItem('user_currency') || '₹');
+
+  const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+  const handleSave = () => {
+    localStorage.setItem('user_name', fullName);
+    localStorage.setItem('user_username', username);
+    localStorage.setItem('user_email', email);
+    localStorage.setItem('user_phone', phone);
+    localStorage.setItem('user_currency', currency);
+    alert('Profile updated successfully.');
+  };
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -65,21 +79,61 @@ export default function Settings() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">First Name</label>
-                <input type="text" defaultValue={userName.split(' ')[0]}className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50" />
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Full Name</label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50"
+                />
               </div>
               <div className="space-y-1.5">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Last Name</label>
-                <input type="text" defaultValue={userName.split(' ').length > 1 ? userName.split(' ')[1] : ''} className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50" />
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Username</label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Phone Number</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50"
+                />
               </div>
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
-                <input type="email" defaultValue="nexus@example.com" className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50" />
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Preferred Currency</label>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="w-full bg-slate-100/50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6E9F9D]/50"
+                >
+                  <option value="₹">₹ INR</option>
+                  <option value="$">$ USD</option>
+                  <option value="€">€ EUR</option>
+                  <option value="£">£ GBP</option>
+                </select>
               </div>
             </div>
 
             <div className="mt-8 flex justify-end">
-              <button className="bg-[#5E8F8E] hover:bg-[#4D7E7D] text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-95 shadow-lg shadow-[#8FBFBD]/25">
+              <button
+                onClick={handleSave}
+                className="bg-[#5E8F8E] hover:bg-[#4D7E7D] text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-95 shadow-lg shadow-[#8FBFBD]/25"
+              >
                 Save Changes
               </button>
             </div>
